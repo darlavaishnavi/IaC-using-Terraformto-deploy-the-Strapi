@@ -1,1 +1,15 @@
+{
+  "name": "strapi-app",
+  "version": "1.0.0",
+  "scripts": {
+    "develop": "strapi develop",
+    "build": "strapi build",
+    "start": "strapi start"
+  },
+  "dependencies": {
+    "@strapi/provider-upload-aws-s3": "latest",
+    "pg": "latest",
+    "strapi": "latest"
+  }
+}
 
