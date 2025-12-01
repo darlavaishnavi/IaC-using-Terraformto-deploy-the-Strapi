@@ -1,29 +1,12 @@
-resource "aws_ecs_cluster" "strapi" {
-  name = "strapi-cluster"
+provider "aws" {
+    region = "us-west-2"  # Set your desired AWS region
 }
 
-resource "aws_ecs_task_definition" "strapi" {
-  family                   = "strapi-task"
-  requires_compatibilities = ["FARGATE"]
-  cpu                      = "512"
-  memory                   = "1024"
-  network_mode             = "awsvpc"
-  execution_role_arn       = aws_iam_role.ecs_task_role.arn
-  task_role_arn            = aws_iam_role.ecs_task_role.arn
-
-  container_definitions = jsonencode([{
-    name  = "strapi"
-    image = "ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/strapi-app:latest"
-    essential = true
-    portMappings = [{
-      containerPort = 1337
-    }]
-    environment = [
-      { name = "DATABASE_HOST", value = aws_db_instance.strapi_db.address },
-      { name = "DATABASE_NAME", value = "strapi" },
-      { name = "DATABASE_USERNAME", value = var.db_username },
-      { name = "DATABASE_PASSWORD", value = "ChangeMe123!" }
-    ]
-  }])
+resource "aws_instance" "my_ec2_instance" {
+    ami           = "ami-03aa99ddf5498ceb9"  # Specify an appropriate AMI ID
+    instance_type = "t3.micro" # Specify instance type
+    key_name      = "key" # Specift key pair valu
+    tags = {
+        Name = "MyterraformEC2"
+   }
 }
-
